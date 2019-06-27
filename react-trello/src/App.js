@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import List from './List'
 import './App.css';
+import STORE from './STORE'
 
+// static defaultProps
 class App extends Component {
   static defaultProps = {
     store: {
@@ -10,8 +12,16 @@ class App extends Component {
     }
   };
 
+  state = {
+    store: STORE,
+  }
+
+  cardDelete = () => {
+    console.log('going to delete the card');
+  }
+
   render() {
-    const { store } = this.props
+    const { store } = this.state
     return (
       <main className='App'>
         <header className='App-header'>
@@ -23,6 +33,7 @@ class App extends Component {
               key={list.id}
               header={list.header}
               cards={list.cardIds.map(id => store.allCards[id])}
+              cardDelete={this.cardDelete}
             />
           ))}
         </div>
@@ -32,3 +43,13 @@ class App extends Component {
 }
 
 export default App;
+
+// deleteCard = (CardId, ListId) => { const aC = {...this.state.allCards} delete aC[CardId]; 
+
+// console.log(aC); 
+
+// this.setState({ lists:this.state.lists.map((list)=>{ 
+//   return { 
+//     id:list.id, header:list.header, cardIds:list.cardIds.filter((item)=>item!==CardId) 
+//   } }), allCards: aC,
+// }) };
