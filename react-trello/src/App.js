@@ -5,20 +5,37 @@ import STORE from './STORE'
 
 // static defaultProps
 class App extends Component {
-  static defaultProps = {
-    store: {
-      lists: [],
-      allCards: {},
-    }
+  state = {
+    store: STORE
   };
 
-  state = {
-    store: STORE,
-  }
+  cardDelete = (deleteId) => {
+    //copy of allCards without key deleteId
+    
+    const allCardsCopy = {...this.state.store.allCards}
+    delete allCardsCopy[deleteId]
 
-  cardDelete = () => {
     console.log('going to delete the card');
+
+    this.setState({
+      store : {
+        allCards : allCardsCopy,
+        lists : this.state.store.lists.map(list => {
+          return {
+            id : list.id,
+            header : list.header,
+            cardId : list.cardId.filter(id => {
+              if(deleteId === id){
+                return false
+              } return true
+            })
+          }
+        })
+      }
+    })
   }
+//return object with id, header, cardId
+//access cardId from
 
   render() {
     const { store } = this.state
@@ -32,7 +49,7 @@ class App extends Component {
             <List
               key={list.id}
               header={list.header}
-              cards={list.cardIds.map(id => store.allCards[id])}
+              cards={list.cardId.map(id => store.allCards[id])}
               cardDelete={this.cardDelete}
             />
           ))}

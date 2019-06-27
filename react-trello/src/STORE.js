@@ -3,22 +3,22 @@ const STORE = {
       {
         id: '1',
         header: 'First list',
-        cardIds: [ 'a', 'b', 'e', 'f', 'g', 'j', 'l', 'm' ],
+        cardId: [ 'a', 'b', 'e', 'f', 'g', 'j', 'l', 'm' ],
       },
       {
         id: '2',
         header: 'Second list',
-        cardIds: ['b', 'c', 'd', 'f', 'h', 'i', 'k'],
+        cardId: ['b', 'c', 'd', 'f', 'h', 'i', 'k'],
       },
       {
         id: '3',
         header: 'Third list',
-        cardIds: [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm' ],
+        cardId: [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm' ],
       },
       {
         id: '4',
         header: 'Fourth list',
-        cardIds: [ 'l', 'm' ],
+        cardId: [ 'l', 'm' ],
       },
     ],
     allCards: {
@@ -39,4 +39,4 @@ const STORE = {
   }
   export default STORE;
 
-  //store changes
+  // = { a: memory address for allcards[''a'], b: memory address for allcards[''b'] }
