@@ -6,7 +6,7 @@ import STORE from './STORE'
 // static defaultProps
 class App extends Component {
   state = {
-    store: STORE
+    store: STORE,
   };
 
   cardDelete = (deleteId) => {
@@ -37,6 +37,43 @@ class App extends Component {
 //return object with id, header, cardId
 //access cardId from
 
+newRandomCard = () => {
+  const id = Math.random().toString(36).substring(2, 4)
+    + Math.random().toString(36).substring(2, 4);
+  return {
+    id,
+    title: `Random Card ${id}`,
+    content: 'lorem ipsum',
+  }
+}
+
+generateRandomCard = (listId) => {
+const randomCard = this.newRandomCard()
+// const copyAllLists = {...this.state.store.allLists}
+// const copyAllCards = {...this.state.store.allCards}
+const copyAllLists = this.state.store.lists.map(list => {
+  if (list.id === listId) {
+    return {
+      ...list,
+      cardId: [...list.cardId, randomCard.id]
+    };
+  }
+  return list;
+})
+console.log('testing generateRandomCard')
+  
+  this.setState({
+    store : {
+      lists: copyAllLists,
+      allCards : {
+        ...this.state.store.allCards,
+        [randomCard.id]: randomCard
+      }
+    }
+  })
+};
+
+
   render() {
     const { store } = this.state
     return (
@@ -48,9 +85,11 @@ class App extends Component {
           {store.lists.map(list => (
             <List
               key={list.id}
+              id={list.id}
               header={list.header}
               cards={list.cardId.map(id => store.allCards[id])}
               cardDelete={this.cardDelete}
+              generateRandomCard={this.generateRandomCard}
             />
           ))}
         </div>
@@ -60,13 +99,3 @@ class App extends Component {
 }
 
 export default App;
-
-// deleteCard = (CardId, ListId) => { const aC = {...this.state.allCards} delete aC[CardId]; 
-
-// console.log(aC); 
-
-// this.setState({ lists:this.state.lists.map((list)=>{ 
-//   return { 
-//     id:list.id, header:list.header, cardIds:list.cardIds.filter((item)=>item!==CardId) 
-//   } }), allCards: aC,
-// }) };
